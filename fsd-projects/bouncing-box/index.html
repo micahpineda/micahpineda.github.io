@@ -8,7 +8,7 @@
       .box {
         width: 70px;
         height: 70px;
-        background-color: rgb(255, 6, 6);
+        background-color: rgb(255, 255, 255);
         font-size: 300%;
         text-align: center;
         user-select: none;
@@ -75,7 +75,7 @@
         // TODO 2 - Variable declarations
         var positionX = 0;
         var points = 0;
-        var speedX = 10;
+        var speed = 10;
         var positionY = 0;
         var speedY = 10;
         var boardHeight = jQuery(window).height();
@@ -88,16 +88,21 @@
          * If the box drifts off the screen, turn it around!
          */
         function update() {
-          moveBoxTo(positionX);
-          positionX += speedX;
+           moveBoxTo(positionX, positionY)
+          positionX += speed;
+          positionY += speedY;
            if (positionX > boardWidth) {
-             speedX *= -1;
+             speed *= -1;
+            }if (positionX < 0) {
+              speed *= -1;
             }
-            if (positionX < 0) {
-              speedX *= -1;
+            if (positionY > 0){
+              speedY *= -1;
             }
-            
-
+            if (positionY < boardHeight){
+              speedY *= -1;
+            }
+           
           }
 
           
@@ -113,16 +118,13 @@
         positionX = 0; 
         changeBoxText(points);
         points ++;
-        speedX +=3;
+        speed = 3 * points + 10;
       
-
-
-
         }
 
 
-        
-      })();
+      
+      })();;
     </script>
   </body>
 </html>
