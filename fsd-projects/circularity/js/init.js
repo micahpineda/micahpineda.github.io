@@ -25,7 +25,7 @@ var circles = []; // variable to store all circles in an array
 
 
         // TODO 2 : Create a function that draws a circle 
- function drawCircle(){
+ function drawCircle(){//this function creates 1 circles each time it is called
     circle = draw.randomCircleInArea(canvas, true, true, "#ac3030ff", 2);
     physikz.addRandomVelocity(circle, canvas, 5, 5);
     view.addChild(circle);
@@ -33,16 +33,16 @@ var circles = []; // variable to store all circles in an array
  }
 
         // TODO 3 : Call the drawCircle() function
-        drawCircle();
-        drawCircle();
-        drawCircle();
-        drawCircle();
-        drawCircle();
+        drawCircle();//creates 1 circle
+        drawCircle();//creates 1 circle
+        drawCircle();//creates 1 circle
+        drawCircle();//creates 1 circle
+        drawCircle();//creates 1 circle
 
 
 
         // TODO 7 : Use a loop to create multiple circles
-        for(var i = 0; i <=100; i++){
+        for(var i = 0; i <=100; i++){/*makes 100 circles*/
             drawCircle();
         }
 
@@ -78,7 +78,7 @@ var circles = []; // variable to store all circles in an array
             */
 
             // TODO 8 / TODO 9 : Iterate over the array
-           for(var i = 0;i < circles.length; i++){
+           for(var i = 0;i < circles.length; i++){//this loop gives each circle in the array motion
             physikz.updatePosition(circles[i]);
             game.checkCirclePosition(circles[i]);
            }
@@ -97,7 +97,7 @@ var circles = []; // variable to store all circles in an array
             }
             
             // TODO 6 : YOUR CODE STARTS HERE //////////////////////
-            if(circle.x < 0){
+            if(circle.x < 0){//these if statments allow the circlse to stay in a certain area
                 circle.x = canvas.width;
             } if(circle.y < 0){
                 circle.y = canvas.height;
