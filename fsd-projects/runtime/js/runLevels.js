@@ -40,44 +40,48 @@ var runLevels = function (window) {
     
     
     
-    function createEnemy(x, y){
-    var enemy = game.createGameItem("enemy", 25);//creates enemy and makes the hit bot 25
-    var enemyImage = draw.rect(50, 50, "red");// draws the image of the image and stores into the varaiable
-    enemyImage.x = -25;//horizontal offset from the image to the hit zone
-    enemyImage.y = -25;//vertical offset from the image to the hit zone
+    function createEnemy(x, y, hitZoneSize, image, offsetX, offsetY, sizeX, sizeY, speed, damage, points){
+    var enemy = game.createGameItem("enemy", hitZoneSize);//creates enemy and makes the hit bot 25
+    var enemyImage = draw.bitmap(image);// draws the image of the image and stores into the varaiable
+    enemyImage.x = offsetX;//horizontal offset from the image to the hit zone
+    enemyImage.y = offsetY;//vertical offset from the image to the hit zone
     enemy.addChild(enemyImage);//attatches the image to the enemy object 
     enemy.x = x;//sets the x position
     enemy.y = y;//sets the y position
     game.addGameItem(enemy);//add the enemy to the game
+    enemyImage.scaleX = sizeX;
+    enemyImage.scaleY = sizeY;
 
-    enemy.velocityX -=3;//moving the enemy across the screen
+    enemy.velocityX -= speed;//moving the enemy across the screen
 //handles when halle colides with enemy
     enemy.onPlayerCollision = function(){
-        game.changeIntegrity(-10)//reduces player health
+        game.changeIntegrity(-damage)//reduces player health
       }
 //handle swhen halle shoots the enemy
       enemy.onProjectileCollision = function(){
-        game.increaseScore(100);//increases the player score
+        game.increaseScore(points);//increases the player score
         enemy.fadeOut();//fades out the enemy when shot
     }
     }
 
 
-    function createReward(x, y){
-    var reward = game.createGameItem("reward", 25);//creates reward and makes the hit bot 25
-    var rewardImage = draw.rect(50, 50, "blue");// draws the image of the image and stores into the varaiable
-    rewardImage.x = -25;//horizontal offset from the image to the hit zone
-    rewardImage.y = -25;//vertical offset from the image to the hit zone
+    function createReward(x, y, hitZoneSize, image, offsetX, offsetY, sizeX, sizeY, speed, healthGained, points){
+    var reward = game.createGameItem("reward", hitZoneSize);//creates reward and makes the hit bot 25
+    var rewardImage = draw.bitmap(image);// draws the image of the image and stores into the varaiable
+    rewardImage.x = offsetX;//horizontal offset from the image to the hit zone
+    rewardImage.y = offsetY;//vertical offset from the image to the hit zone
     reward.addChild(rewardImage);//attatches the image to the reward object 
     reward.x = x;//sets the x position
     reward.y = y;//sets the y position
     game.addGameItem(reward);//add the reward to the game
+    rewardImage.scaleX = sizeX;
+    rewardImage.scaleY = sizeY;
 
-    reward.velocityX -=2;//moving the reward across the screen
+    reward.velocityX -= speed;//moving the reward across the screen
 //handles when halle colides with reward
     reward.onPlayerCollision = function(){
-        game.changeIntegrity(+10)//reduces player health
-        game.increaseScore(100);//increases the player score
+        game.changeIntegrity(+healthGained)//increaces player health
+        game.increaseScore(points);//increases the player score
         reward.fadeOut();//fades out the reward when shot
     }
     }
@@ -117,11 +121,11 @@ var runLevels = function (window) {
           createObstacle(element.x, element.y, element.damage, element.rotation, element.image, element.offsetX, element.offsetY , element.sizeX, element.sizeY, element.hitZone);
         };
         if(element.type === "enemy"){
-          createEnemy(element.x, element.y);
+          createEnemy(element.x, element.y, element.hitZoneSize, element.image, element.offsetX, element.offsetY, element.sizeX, element.sizeY, element.speed, element.damage, element.points);
         };
         if(element.type === "reward"){
-          createReward(element.x, element.y);
-        };
+          createReward(element.x, element.y, element.hitZoneSize, element.image, element.offsetX, element.offsetY, element.sizeX, element.sizeY, element.speed, element.healthGained, element.points);
+        };//x, y, hitZoneSize, image, offsetX, offsetY, sizeX, sizeY, speed, healthGained, points
         if(element.type === "level marker"){
           createLevelMarker(element.x, element.y);
         }
