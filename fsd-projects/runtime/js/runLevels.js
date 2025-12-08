@@ -59,7 +59,7 @@ var runLevels = function (window) {
       }
 //handle swhen halle shoots the enemy
       enemy.onProjectileCollision = function(){
-        game.increaseScore(points);//increases the player score
+        game.increaseScore(+points);//increases the player score
         enemy.fadeOut();//fades out the enemy when shot
     }
     }
@@ -81,7 +81,7 @@ var runLevels = function (window) {
 //handles when halle colides with reward
     reward.onPlayerCollision = function(){
         game.changeIntegrity(+healthGained)//increaces player health
-        game.increaseScore(points);//increases the player score
+        game.increaseScore(+points);//increases the player score
         reward.fadeOut();//fades out the reward when shot
     }
     }
@@ -89,22 +89,24 @@ var runLevels = function (window) {
 
 
 
-    function createLevelMarker(x, y){
-    var levelMarker = game.createGameItem("level", 25);//creates level and makes the hit bot 25
-    var levelImage = draw.rect(50, 50, "yellow");// draws the image of the image and stores into the varaiable
-    levelImage.x = -25;//horizontal offset from the image to the hit zone
-    levelImage.y = -25;//vertical offset from the image to the hit zone
+    function createLevelMarker(x, y, hitZoneSize, image, offsetX, offsetY, sizeX, sizeY, speed, healthGained){
+    var levelMarker = game.createGameItem("level", hitZoneSize);//creates level and makes the hit bot 25
+    var levelImage = draw.bitmap(image);// draws the image of the image and stores into the varaiable
+    levelImage.x = offsetX;//horizontal offset from the image to the hit zone
+    levelImage.y = offsetY;//vertical offset from the image to the hit zone
     levelMarker.addChild(levelImage);//attatches the image to the level object 
     levelMarker.x = x;//sets the x position
     levelMarker.y = y;//sets the y position
     game.addGameItem(levelMarker);//add the level to the game
+    levelImage.scaleX = sizeX;
+    levelImage.scaleY = sizeY;
 
-    levelMarker.velocityX -=2;//moving the level across the screen
+    levelMarker.velocityX -= speed;//moving the level across the screen
 //handles when halle colides with level
     levelMarker.onPlayerCollision = function(){
       levelMarker.fadeOut();//fades out the level when shot
       startLevel();// changes level
-      game.changeIntegrity(+100)//reduces player health
+      game.changeIntegrity(+healthGained)//IncreACES player health
     }
     }
 
@@ -127,7 +129,7 @@ var runLevels = function (window) {
           createReward(element.x, element.y, element.hitZoneSize, element.image, element.offsetX, element.offsetY, element.sizeX, element.sizeY, element.speed, element.healthGained, element.points);
         };//x, y, hitZoneSize, image, offsetX, offsetY, sizeX, sizeY, speed, healthGained, points
         if(element.type === "level marker"){
-          createLevelMarker(element.x, element.y);
+          createLevelMarker(element.x, element.y, element.hitZoneSize, element.image, element.offsetX, element.offsetY, element.sizeX, element.sizeY, element.speed, element.healthGained);
         }
     }
 
