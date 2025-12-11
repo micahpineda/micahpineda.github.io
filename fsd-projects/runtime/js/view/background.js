@@ -39,12 +39,22 @@ var background = function (window) {
             // TODO 1:
             // this currently fills the background with an obnoxious yellow;
             // you should modify both the height and color to suit your game
-            var backgroundFill = draw.rect(canvasWidth,groundY,'white');// draws a rectangle and stores it in backgroundFill
-            background.addChild(backgroundFill);//add background fill to the background object
-            
+            var backgroundImage = draw.bitmap("img/wasteland.jpg");// draws a rectangle and stores it in backgroundFill
+            background.addChild(backgroundImage);//add background fill to the background object
+            // Scale image to fit width
+            backgroundImage.scaleX = canvasWidth / backgroundImage.image.width;
+            backgroundImage.scaleY = backgroundImage.scaleX;
+
+            // After scaling, compute its new height
+            var scaledHeight = backgroundImage.image.height * backgroundImage.scaleY;
+
+            // Position it so the BOTTOM of the image touches the ground
+            backgroundImage.x = 0;
+            backgroundImage.y = groundY - scaledHeight;
+
             // TODO 2: - Add a moon and starfield
             
-            for(var i = 0; i< 50; i++){
+            /*for(var i = 0; i< 50; i++){
             var circle = draw.circle(1, "white", "LightGray", 2);// creates a circle  with a specified radius bordercolor, fill color, and alpha(opacity) stores it in the variablw
             circle.x = canvasWidth * Math.random();// sets a random x position with in canvas width
             circle.y = groundY * Math.random();// sets a random y position with in ground y
@@ -62,7 +72,7 @@ var background = function (window) {
             
             // TODO 4: Part 1 - Add buildings!     Q: This is before TODO 4 for a reason! Why?
             for (var i = 0; i < 5; ++i) {// creates five buildings
-                var buildingColors = ["Red", "Blue", "Black", "Purple", "Orange" ];// store color variables
+                var buildingColors = ["Red", "Green", "Black", "Purple", "Orange" ];// store color variables
                 var buildingHeight = 300 * Math.random(200, 700);// store the value that represents the height
                 var building = draw.rect(75, buildingHeight, buildingColors[i], "Black", 1);//draws a rectangle and uses the arguemants to make a building 
                 building.x = 400 * i;// gives it an x value
@@ -75,7 +85,7 @@ var background = function (window) {
             tree = draw.bitmap("img/tree.png");//created a bitmat image using a tree image and stores it in the tree variable
             tree.x = 600;//sets the x value of the tree
             tree.y = groundY - 230;//sets the y value of the tree
-            background.addChild(tree);
+            background.addChild(tree);*/
             
         } // end of render function - DO NOT DELETE
         
@@ -88,7 +98,7 @@ var background = function (window) {
             var canvasHeight = app.canvas.height;
             var groundY = ground.y;
             
-            // TODO 3: Part 2 - Move the tree!
+           /* // TODO 3: Part 2 - Move the tree!
             tree.x = tree.x - 3;// moves the tree to the left be subtracting from it current x position
             
             // checks if the tree has gone to the left an resets it
@@ -105,7 +115,7 @@ var background = function (window) {
                     building.x = canvas.width;
                 }
             }
-
+*/
         } // end of update function - DO NOT DELETE
         
         
